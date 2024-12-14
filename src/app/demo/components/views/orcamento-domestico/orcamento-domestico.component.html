@@ -10,38 +10,48 @@
         </ng-template>
     </p-toolbar>
 
-    <p-table #dt [value]="countries" [rows]="10" [paginator]="true"
-        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
-        [tableStyle]="{ 'min-width': '75rem' }" [(selection)]="countries" [rowHover]="true" dataKey="id"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
-        <ng-template pTemplate="caption">
-            <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0">Recursos do Usuário</h5>
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="width: 4rem">
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
-                <th pSortableColumn="name">Data <p-sortIcon field="data"></p-sortIcon></th>
-                <th pSortableColumn="price">Renda <p-sortIcon field="renda"></p-sortIcon></th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-product>
-            <tr>
-                <td></td>
-                <td>
-                    <p-tableCheckbox [value]="product"></p-tableCheckbox>
-                </td>
-                <td></td>
+    <div *ngIf="recursoUsuarioPaginado">
+        <p-table
+            #dt
+            [value]="recursoUsuarioPaginado.content"
+            [rows]="10"
+            [paginator]="true"
+            [lazy]="true"
+            [totalRecords]="recursoUsuarioPaginado.totalElements"
+            [style]="{ 'min-width': '75rem' }"
+            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+            [showCurrentPageReport]="true"
+            (onLazyLoad)="buscarRecursosUsuario($event)">
+            <ng-template pTemplate="caption">
+                <div class="flex align-items-center justify-content-between">
+                    <h5 class="m-0">Recursos do Usuário</h5>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="data">Data <p-sortIcon field="data"></p-sortIcon></th>
+                    <th pSortableColumn="renda">Renda <p-sortIcon field="renda"></p-sortIcon></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-recursoUsuario>
+                <tr>
+                    <td>{{ recursoUsuario.data | date:'MMMM/yyyy' }}</td>
+                    <td>{{ recursoUsuario.renda | currency:'BRL' }}</td>
+                </tr>
+            </ng-template>
+            <ng-template *ngIf="recursoUsuarioPaginado.totalElements > 0" pTemplate="summary">
+                <div class="flex align-items-center justify-content-between">
+                    No total, há {{ recursoUsuarioPaginado.totalElements }} registros.
+                </div>
+            </ng-template>
 
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="summary">
-            <!-- <div class="flex align-items-center justify-content-between">In total there are {{ products ? products.length : 0 }} products.</div>  -->
-        </ng-template>
-    </p-table>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="7">Não há registros disponíveis.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+      </div>
 </div>
 
 <p-dialog [(visible)]="productDialog" [style]="{ width: '420px', height: '435px' }" header="Recurso Mensal" [modal]="true"

@@ -6,8 +6,10 @@ import { CustomerService } from 'src/app/demo/service/customer.service';
 import { ProductService } from 'src/app/demo/service/product.service';
 import { Product } from 'src/app/demo/api/product';
 import { Estoque } from 'src/app/demo/model/Estoque';
-import { EstoqueService } from 'src/app/demo/service/estoque.service';
+import { RecursoUsuarioService } from 'src/app/demo/service/recursoUsuario.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { RecursoUsuario } from 'src/app/demo/model/RecursoUsuario';
+import { Page } from 'src/app/demo/model/Page';
 
 @Component({
     templateUrl: './orcamento-domestico.component.html',
@@ -57,56 +59,58 @@ export class OrcamentoDomesticoComponent implements OnInit {
 
     estoqueLista: Estoque[] = [];
 
-    @ViewChild('filter') filter!: ElementRef;
+    recursoUsuarioPaginado!: Page<RecursoUsuario>;
 
     statuses: any[] = [];
 
     constructor(
                 private customerService: CustomerService, 
-                private estoqueService: EstoqueService,
+                private recursoUsuarioService: RecursoUsuarioService,
                 private productService: ProductService,
                 private messageService: MessageService, 
                 private confirmationService: ConfirmationService
                 ) { }
 
     ngOnInit() {
-        this.estoqueService.buscarTodosItensEstoque('teste', null).subscribe(
-            response => this.estoqueLista = response,
-            error => error
-        )
-        this.customerService.getCustomersLarge().then(customers => {
-            this.customers1 = customers;
-            this.loading = false;
-
-            // @ts-ignore
-            this.customers1.forEach(customer => customer.date = new Date(customer.date));
-        });
-        this.customerService.getCustomersMedium().then(customers => this.customers2 = customers);
-        this.customerService.getCustomersLarge().then(customers => this.customers3 = customers);
-        this.productService.getProductsWithOrdersSmall().then(data => this.products = data);
-
-        this.representatives = [
-            { name: 'Amy Elsner', image: 'amyelsner.png' },
-            { name: 'Anna Fali', image: 'annafali.png' },
-            { name: 'Asiya Javayant', image: 'asiyajavayant.png' },
-            { name: 'Bernardo Dominic', image: 'bernardodominic.png' },
-            { name: 'Elwin Sharvill', image: 'elwinsharvill.png' },
-            { name: 'Ioni Bowcher', image: 'ionibowcher.png' },
-            { name: 'Ivan Magalhaes', image: 'ivanmagalhaes.png' },
-            { name: 'Onyama Limba', image: 'onyamalimba.png' },
-            { name: 'Stephen Shaw', image: 'stephenshaw.png' },
-            { name: 'XuXue Feng', image: 'xuxuefeng.png' }
-        ];
-
-        this.statuses = [
-            { label: 'Unqualified', value: 'unqualified' },
-            { label: 'Qualified', value: 'qualified' },
-            { label: 'New', value: 'new' },
-            { label: 'Negotiation', value: 'negotiation' },
-            { label: 'Renewal', value: 'renewal' },
-            { label: 'Proposal', value: 'proposal' }
-        ];
+        this.buscarRecursosUsuario({ first: 0, rows: 10 }); // Carregar dados da primeira página
     }
+
+    buscarRecursosUsuario(event: any): void {
+        const page = Math.floor(event.first / event.rows);
+        const size = event.rows;
+        const sortField = event.sortField || 'id';
+        const sortOrder = event.sortOrder === -1 ? 'desc' : 'asc';
+        const sort = `${sortField},${sortOrder}`;
+    
+        this.recursoUsuarioService.buscarTodos('teste', page, size, sort).subscribe({
+          next: (data) => {
+            this.recursoUsuarioPaginado = data;
+          },
+          error: (err) => {
+            console.error('Erro ao carregar recursos:', err);
+            this.recursoUsuarioPaginado = {
+                content: [],
+                totalElements: 0,
+                pageable: {
+                  sort: { sorted: false, unsorted: true, empty: true },
+                  offset: 0,
+                  pageSize: 0,
+                  pageNumber: 0,
+                  paged: false,
+                  unpaged: true
+                },
+                totalPages: 0,
+                last: true,
+                size: 0,
+                number: 0,
+                sort: { sorted: false, unsorted: true, empty: true },
+                numberOfElements: 0,
+                first: true,
+                empty: true
+              };
+          }
+        });
+      }
 
     onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
@@ -114,7 +118,6 @@ export class OrcamentoDomesticoComponent implements OnInit {
 
     clear(table: Table) {
         table.clear();
-        this.filter.nativeElement.value = '';
     }
 
     openNew() {
