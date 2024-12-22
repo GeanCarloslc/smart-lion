@@ -2,6 +2,7 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { NotfoundComponent } from './demo/components/notfound/notfound.component';
 import { AppLayoutComponent } from "./layout/app.layout.component";
+import { PagesModule } from './demo/components/pages/pages.module';
 
 @NgModule({
     imports: [
@@ -10,12 +11,14 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                 path: '', component: AppLayoutComponent,
                 children: [
                     { path: '', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
-                    { path: 'view', loadChildren: () => import('./demo/components/views/views.module').then(m => m.ViewModule) }
+                    { path: 'view', loadChildren: () => import('./demo/components/views/views.module').then(m => m.ViewModule) },
+                    { path: 'orcamento-domestico', loadChildren: () => import('./demo/components/orcamento-domestico/orcamento-domestico.module').then(m => m.OrcamentoDomesticoModule) }
                 ]
             },
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
             { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
             { path: 'notfound', component: NotfoundComponent },
+            { path: 'pages', component: PagesModule },
             { path: '**', redirectTo: '/notfound' },
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })
     ],

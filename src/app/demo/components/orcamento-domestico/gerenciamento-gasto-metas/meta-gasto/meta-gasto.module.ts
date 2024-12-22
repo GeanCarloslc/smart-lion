@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { OrcamentoDomesticoComponent } from './orcamento-domestico.component';
-import { OrcamentoDomesticoRoutingModule } from './orcamento-domestico-routing.module';
+import { MetaGastoComponent } from './meta-gasto.component';
+import { MetaGastoRoutingModule } from './meta-gasto-routing.module';
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { CalendarModule } from "primeng/calendar";
 import { ChipsModule } from "primeng/chips";
@@ -21,12 +21,13 @@ import { ToastModule } from 'primeng/toast';  // Importando o módulo Toast
 import { ToolbarModule } from 'primeng/toolbar';
 import { TagModule } from 'primeng/tag';
 import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		FormsModule,
-		OrcamentoDomesticoRoutingModule,
+		MetaGastoRoutingModule,
 		AutoCompleteModule,
 		CalendarModule,
 		ChipsModule,
@@ -44,8 +45,10 @@ import { DialogModule } from 'primeng/dialog';
 		ToastModule,
 		ToolbarModule,
 		TagModule,
-		DialogModule
+		DialogModule,
+		ConfirmDialogModule,
 	],
-	declarations: [OrcamentoDomesticoComponent]
+	declarations: [MetaGastoComponent],
+	exports: [MetaGastoComponent]
 })
-export class OrcamentoDomesticoModule { }
+export class MetaGastoModule { }

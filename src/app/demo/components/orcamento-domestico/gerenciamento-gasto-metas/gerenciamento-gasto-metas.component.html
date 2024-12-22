@@ -1,0 +1,18 @@
+<div class="card">
+  <h2 class="text-center" style="font-family: 'Open Sans', sans-serif; font-weight: 600; color: #333; margin-bottom: 20px;">
+      <i class="pi pi-chart-line" style="font-size: 22px; margin-right: 8px;"></i> Gerenciamento de Gasto e Metas
+  </h2>
+
+  <p-splitter styleClass="mb-5">
+      <ng-template pTemplate>
+          <div class="col align-items-center justify-content-center" style="overflow-y: auto;">
+              <app-meta-gasto></app-meta-gasto>
+          </div>
+      </ng-template>
+      <ng-template pTemplate>
+          <div class="col align-items-center justify-content-center" style="overflow-y: auto;">
+              <app-gasto></app-gasto>
+          </div>
+      </ng-template>
+  </p-splitter>
+</div>

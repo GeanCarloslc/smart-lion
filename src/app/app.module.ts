@@ -12,7 +12,7 @@ import { IconService } from './demo/service/icon.service';
 import { NodeService } from './demo/service/node.service';
 import { PhotoService } from './demo/service/photo.service';
 import { EstoqueService } from './demo/service/estoque.service';
-import { RecursoUsuarioService } from './demo/service/recursoUsuario.service';
+import { RecursosUsuarioService } from './demo/service/recursosUsuario.service';
 import localePt from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 import { LOCALE_ID } from '@angular/core';
@@ -29,15 +29,15 @@ registerLocaleData(localePt);
     imports: [
         AppRoutingModule,
         AppLayoutModule,
-        ToastModule,  // Importando o módulo Toast
-        ToolbarModule  // Importando o módulo Toolbar
+        ToastModule,
+        ToolbarModule 
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         { provide: LOCALE_ID, useValue: 'pt-BR' },
         CountryService, 
         EstoqueService,
-        RecursoUsuarioService, 
+        RecursosUsuarioService, 
         CustomerService, 
         EventService, 
         IconService, 
