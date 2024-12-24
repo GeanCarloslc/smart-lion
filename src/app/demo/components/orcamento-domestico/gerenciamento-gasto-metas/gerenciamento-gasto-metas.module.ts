@@ -18,13 +18,11 @@ import { PasswordModule } from "primeng/password";
 import { TableModule } from 'primeng/table';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SliderModule } from 'primeng/slider';
-import { ToastModule } from 'primeng/toast';  // Importando o módulo Toast
+import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TagModule } from 'primeng/tag';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { MetaGastoComponent } from './meta-gasto/meta-gasto.component';
-import { GastoComponent } from './gasto/gasto.component';
 import { GastoModule } from './gasto/gasto.module';
 import { MetaGastoModule } from './meta-gasto/meta-gasto.module';
 import { TabViewModule } from 'primeng/tabview';
@@ -54,10 +52,10 @@ import { SplitterModule } from 'primeng/splitter';
     TagModule,
     DialogModule,
     ConfirmDialogModule,
-	MetaGastoModule,
-	GastoModule,
-	TabViewModule,
-	SplitterModule
+    MetaGastoModule,
+    GastoModule,
+    TabViewModule,
+    SplitterModule
   ],
   declarations: [
     GerenciamentoGastoMetasComponent,

@@ -1,18 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
     templateUrl: './gerenciamento-gasto-metas.component.html',
     providers: [MessageService, ConfirmationService]
 })
 export class GerenciamentoGastoMetasComponent implements OnInit {
-  
 
-  constructor(private router: Router) {}
+  saldo: number = 0;
   
+  constructor(
+    private router: Router,
+    private location: Location,
+    private route: ActivatedRoute
+    ) {}
+    
   ngOnInit(): void {
-
+    this.route.queryParams.subscribe(params => {
+      this.saldo = params['saldo'];
+    });
   }
 
   navegarParaGasto() {
@@ -21,5 +29,9 @@ export class GerenciamentoGastoMetasComponent implements OnInit {
 
   navegarParaMetaGasto() {
     this.router.navigate(['/orcamento-domestico/recursos-usuario/meta-gasto']);
+  }
+
+  voltar(){
+    this.location.back();
   }
 }

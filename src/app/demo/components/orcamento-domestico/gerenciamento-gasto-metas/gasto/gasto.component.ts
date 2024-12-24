@@ -146,7 +146,6 @@ export class GastoComponent implements OnInit {
   }
 
   editarRecursosUsuario(recursosUsuario: RecursosUsuario) {
-    this.recursosUsuario = this.criarRecursosUsuario();
     this.recursosUsuario = { ...recursosUsuario };
     this.recursosUsuarioDialog = true;
 }

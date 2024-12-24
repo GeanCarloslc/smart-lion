@@ -18,6 +18,8 @@ import { registerLocaleData } from '@angular/common';
 import { LOCALE_ID } from '@angular/core';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
+import { MetaGastoService } from './demo/service/metaGasto.service';
+import { CategoriaGastoService } from './demo/service/categoriaGasto.service';
 
 registerLocaleData(localePt);
 
@@ -38,6 +40,8 @@ registerLocaleData(localePt);
         CountryService, 
         EstoqueService,
         RecursosUsuarioService, 
+        MetaGastoService,
+        CategoriaGastoService,
         CustomerService, 
         EventService, 
         IconService, 

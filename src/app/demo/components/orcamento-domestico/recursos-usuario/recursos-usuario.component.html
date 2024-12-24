@@ -3,7 +3,7 @@
     <p-toolbar styleClass="mb-4 gap-2">
         <ng-template pTemplate="left">
             <button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2"
-                (click)="openNew()"></button>
+                (click)="abrirDialog()"></button>
 
                 <p-button
                 severity="danger" 
@@ -110,8 +110,8 @@
     </ng-template>
 
     <ng-template pTemplate="footer">
-        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-        <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text" (click)="salvarRecursosUsuario()"></button>
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="fecharDialog()"></button>
+        <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text" (click)="salvarOuAtualizar()"></button>
     </ng-template>
 </p-dialog>
 

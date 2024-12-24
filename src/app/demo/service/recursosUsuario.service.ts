@@ -29,7 +29,7 @@ export class RecursosUsuarioService {
       .pipe(
         catchError((error) => {
           console.error('Erro ao buscar recursos:', error);
-          return throwError(() => error); // Propaga o erro para quem consome o serviço
+          return throwError(() => error);
         })
       );
   }
@@ -43,20 +43,32 @@ export class RecursosUsuarioService {
       .pipe(
         catchError((error) => {
           console.error('Erro ao salvar recurso:', error);
-          return throwError(() => error); // Propaga o erro para quem consome o serviço
+          return throwError(() => error);
         })
       );
   }
 
+  atualizar(id: Number, recursoUsuario: RecursosUsuario): Observable<void> {
+    const url = `${environment.apiBaseUrl}${this.requestMapping}/atualizar/${id}`;
+    return this.http
+      .patch<void>(url, recursoUsuario)
+      .pipe(
+        catchError((error) => {
+          console.error(`Erro ao atualizar recurso com ID ${id}:`, error);
+          return throwError(() => error);
+        })
+      );
+  }
+  
   excluir(recursosUsuarios: RecursosUsuario[]): Observable<void> {
     let ids = recursosUsuarios.map(r => r.id);
     const url = `${environment.apiBaseUrl}${this.requestMapping}/excluir`;
     return this.http
-      .delete<void>(url, { body: ids }) // Envia apenas os IDs, sem o "ids" como chave
+      .delete<void>(url, { body: ids })
       .pipe(
         catchError((error) => {
           console.error('Erro ao deletar recursos:', error);
-          return throwError(() => error); // Propaga o erro para quem consome o serviço
+          return throwError(() => error);
         })
       );
   }

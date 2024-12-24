@@ -1,113 +1,113 @@
-
-    <p-toast></p-toast>
-    <p-toolbar styleClass="mb-4 gap-2">
-        <ng-template pTemplate="left">
-            <button pButton pRipple label="Incluir Meta" icon="pi pi-plus" class="p-button-success mr-2"
-                (click)="openNew()"></button>
-
-                <p-button
-                severity="danger" 
-                label="Delete" 
-                icon="pi pi-trash" 
-                (onClick)="excluirRecursosUsuarioSeleciodados()" 
-                [disabled]="!recursosUsuarioSelecionado || !recursosUsuarioSelecionado.length" />
+<p-toast></p-toast>
+<p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+        <button pButton pRipple label="Incluir Meta" icon="pi pi-plus" class="p-button-success mr-2"
+            (click)="abrirDialog()"></button>
+        <p-button severity="danger" label="Delete" icon="pi pi-trash" (onClick)="excluirMetaGastoSeleciodados()"
+            [disabled]="!metaGastoSelecionado || !metaGastoSelecionado.length" />
+    </ng-template>
+</p-toolbar>
+<div *ngIf="metaGastoPaginado">
+    <p-table #dt [value]="metaGastoPaginado.content" [rows]="10" [paginator]="true" [lazy]="true" [scrollable]="true"
+        scrollHeight="400px" [totalRecords]="metaGastoPaginado.totalElements"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+        [showCurrentPageReport]="true" [(selection)]="metaGastoSelecionado" (onLazyLoad)="buscarMetaGasto($event)">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Metas Mensal</h5>
+            </div>
         </ng-template>
-    </p-toolbar>
-    <div *ngIf="recursosUsuarioPaginado">
-        <p-table
-            #dt
-            [value]="recursosUsuarioPaginado.content"
-            [rows]="10"
-            [paginator]="true"
-            [lazy]="true"
-            [scrollable]="true" 
-            scrollHeight="400px"
-            [totalRecords]="recursosUsuarioPaginado.totalElements"
-            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
-            [showCurrentPageReport]="true"
-            [(selection)]="recursosUsuarioSelecionado"
-            (onLazyLoad)="buscarRecursosUsuario($event)">
-            <ng-template pTemplate="caption">
-                <div class="flex align-items-center justify-content-between">
-                    <h5 class="m-0">Metas Mensal</h5>
-                </div>
-            </ng-template>
-            <ng-template pTemplate="header">
-                <tr>
-                    <th style="width: 4rem">
-                        <p-tableHeaderCheckbox />
-                    </th>
-                    <th pSortableColumn="data">Categoria<p-sortIcon field="data"></p-sortIcon></th>
-                    <th pSortableColumn="renda">Valor<p-sortIcon field="renda"></p-sortIcon></th>
-                    <th style="width:15rem" ></th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-recursosUsuario>
-                <tr>
-                    <td>
-                        <p-tableCheckbox [value]="recursosUsuario" />
-                    </td>
-                    <td>Categoria</td>
-                    <td>Valor</td>
-                    <td>
-                        <p-button 
-                            icon="pi pi-pencil" 
-                            class="mr-2" 
-                            [rounded]="true" 
-                            [outlined]="true" 
-                            severity="success" 
-                            (onClick)="editarRecursosUsuario(recursosUsuario)" />
-                        <p-button 
-                            icon="pi pi-trash" 
-                            class="mr-2" 
-                            severity="danger" 
-                            [rounded]="true" 
-                            [outlined]="true" 
-                            (onClick)="excluirRecursosUsuario(recursosUsuario)" />
-                    </td>
-                </tr>
-            </ng-template>
-            <ng-template *ngIf="recursosUsuarioPaginado.totalElements > 0" pTemplate="summary">
-                <div class="flex align-items-center justify-content-between">
-                    No total, há {{ recursosUsuarioPaginado.totalElements }} registros.
-                </div>
-            </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 4rem">
+                    <p-tableHeaderCheckbox />
+                </th>
+                <th pSortableColumn="categoriaGasto.nome">Categoria<p-sortIcon field="categoriaGasto.nome"></p-sortIcon>
+                </th>
+                <th pSortableColumn="valorMeta">Valor<p-sortIcon field="valorMeta"></p-sortIcon>
+                </th>
+                <th style="width:15rem"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-metaGasto>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="metaGasto" />
+                </td>
+                <td>
+                    <img class="ml-1 vertical-align-middle"
+                        [src]="'assets/layout/images/' + metaGasto.categoriaGastoDto.icone"
+                        style="width: 25px; height: auto;" />
+                    <span class="ml-1 vertical-align-middle">
+                        {{metaGasto.categoriaGastoDto.nome}}
+                    </span>
+                </td>
+                <td>{{metaGasto.valorMeta | currency:'BRL'}}</td>
+                <td>
+                    <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" severity="success"
+                        (onClick)="editarMetaGasto(metaGasto)" />
+                    <p-button icon="pi pi-trash" class="mr-2" severity="danger" [rounded]="true" [outlined]="true"
+                        (onClick)="excluirMetaGasto(metaGasto)" />
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                No total, há {{ metaGastoPaginado.totalElements }} registros.
+            </div>
+        </ng-template>
 
-            <ng-template pTemplate="emptymessage">
-                <tr>
-                    <td colspan="7">Não há registros disponíveis.</td>
-                </tr>
-            </ng-template>
-        </p-table>
-      </div>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="7">Não há registros disponíveis.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
 
 
-<p-dialog [(visible)]="recursosUsuarioDialog" [style]="{ width: '420px', height: '435px' }" header="Recurso Mensal" [modal]="true"
-    styleClass="p-fluid">
+<p-dialog [(visible)]="metaGastoDialog" [style]="{ width: '420px', height: '475px' }" header="Metas Mensal"
+    [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="formgrid grid">
             <div class="field col">
-                <label for="price">Mês/Ano</label>
-                <p-calendar [(ngModel)]="recursosUsuario.data" view="month" dateFormat="mm/yy" ></p-calendar>
-
+                <label for="quantity">Valor</label>
+                <p-inputNumber id="price" [(ngModel)]="metaGasto.valorMeta" mode="currency" currency="BRL">
+                </p-inputNumber>
             </div>
             <div class="field col">
-                <label for="quantity">Renda</label>
-                <p-inputNumber id="price" [(ngModel)]="recursosUsuario.renda" mode="currency" currency="BRL"></p-inputNumber>
-            </div>  
-        </div>
-        <div class="field">
-            <div style="display: flex; justify-content: center; align-items: center;" class="field col">
-                    <i class="pi pi-wallet" style="font-size: 150px; color: gray; padding-right: 50px;"></i>
-                    <i class="pi pi-money-bill" style="font-size: 150px; color: green; "></i>   
+                <label for="quantity">Categoria</label>
+                <p-dropdown [options]="categoriaGastoLista" [(ngModel)]="metaGasto.categoriaGastoDto" optionLabel="nome"
+                    [filter]="true" filterBy="nome" [showClear]="true" placeholder="Selecione">
+
+                    <ng-template pTemplate="selectedItem" let-opcaoSelecionada>
+                        <div class="flex align-items-center gap-2" *ngIf="opcaoSelecionada">
+                            <img class="ml-1 vertical-align-middle"
+                                [src]="'assets/layout/images/' + (opcaoSelecionada?.icone || 'default-icon.png')"
+                                style="width: 22px; height: auto;" />
+                            <div>{{ opcaoSelecionada?.nome }}</div>
+                        </div>
+                    </ng-template>
+
+                    <ng-template let-categoriaGasto pTemplate="item">
+                        <div class="flex align-items-center gap-2">
+                            <img class="ml-1 vertical-align-middle"
+                                [src]="'assets/layout/images/' + (categoriaGasto.icone || 'default-icon.png')"
+                                style="width: 25px; height: auto;" />
+                            <div>{{ categoriaGasto.nome }}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
             </div>
-        </div>    
+        </div>
     </ng-template>
 
     <ng-template pTemplate="footer">
-        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-        <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text" (click)="salvarRecursosUsuario()"></button>
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+            (click)="fecharDialog()"></button>
+        <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text"
+            (click)="salvarOuAtualizar()"></button>
     </ng-template>
 </p-dialog>
 
-<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog> 
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

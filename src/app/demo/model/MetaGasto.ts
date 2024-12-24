@@ -1,8 +1,8 @@
-import { Usuario } from "./Usuario";
+import { CategoriaGasto } from "./CategoriaGasto";
 
-export interface RecursosUsuario {
+export interface MetaGasto {
     id?: Number;
-    usuarioDto: Usuario;
-    renda: Number;
-    data: Date;
+    categoriaGastoDto?: CategoriaGasto;
+    recursosUsuarioId?: Number;
+    valorMeta?: Number;
 }

@@ -1,18 +1,45 @@
 <div class="card">
-  <h2 class="text-center" style="font-family: 'Open Sans', sans-serif; font-weight: 600; color: #333; margin-bottom: 20px;">
-      <i class="pi pi-chart-line" style="font-size: 22px; margin-right: 8px;"></i> Gerenciamento de Gasto e Metas
-  </h2>
 
-  <p-splitter styleClass="mb-5">
-      <ng-template pTemplate>
-          <div class="col align-items-center justify-content-center" style="overflow-y: auto;">
-              <app-meta-gasto></app-meta-gasto>
-          </div>
-      </ng-template>
-      <ng-template pTemplate>
-          <div class="col align-items-center justify-content-center" style="overflow-y: auto;">
-              <app-gasto></app-gasto>
-          </div>
-      </ng-template>
-  </p-splitter>
+    <div class="grid">
+        <div class="col-4 pb-0">
+            <div class="grid">
+                <div class="col-1 pb-0 pr-0">
+                    <span>
+                        <i [ngStyle]="{color: 'var(--green-600)'}" class="pi pi-wallet mt-1 ml-0" style="font-size: 30px; margin-left: 8px;"></i>
+                    </span>
+                </div>
+                <div class="col-11 pb-0 pl-4">
+                    <span  style="font-size: 20px;" class="mt-1 block font-bold">
+                        Saldo: {{saldo | currency:'BRL'}} 
+                    </span>
+                </div>
+            </div>
+
+            
+        </div>
+        <div class="col-8 pb-0">
+            <h2 class="text-left"
+                style="font-family: 'Open Sans', sans-serif; font-weight: 600; color: #333; margin-bottom: 20px; ">
+                <span>
+                    <i class="pi pi-chart-line" style="font-size: 24px; margin-right: 8px;"></i> Gerenciamento de Gastos
+                    e Metas
+                </span>
+            </h2>
+        </div>
+    </div>
+
+    <p-splitter styleClass="mb-5">
+        <ng-template pTemplate>
+            <div class="col align-items-center justify-content-center" style="overflow-y: auto;">
+                <app-meta-gasto></app-meta-gasto>
+            </div>
+        </ng-template>
+        <ng-template pTemplate>
+            <div class="col align-items-center justify-content-center" style="overflow-y: auto;">
+                <app-gasto></app-gasto>
+            </div>
+        </ng-template>
+    </p-splitter>
+
+    <p-button label="Voltar" icon="pi pi-arrow-left" (onClick)="voltar()" class="mb-4"></p-button>
 </div>
